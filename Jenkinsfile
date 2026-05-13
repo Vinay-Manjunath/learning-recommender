@@ -27,15 +27,23 @@ pipeline {
             }
         }
 
-        stage('Push Images') {
+        stage('Docker Login & Push') {
             steps {
-                sh '''
-                docker push $REGISTRY/learning-recommender-frontend:$TAG
-                docker push $REGISTRY/learning-recommender-gateway:$TAG
-                docker push $REGISTRY/learning-recommender-user-service:$TAG
-                docker push $REGISTRY/learning-recommender-feedback-service:$TAG
-                docker push $REGISTRY/learning-recommender-recommendation-service:$TAG
-                '''
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+        
+                    docker push docker.io/vinaymanjunath/learning-recommender-frontend:latest
+                    docker push docker.io/vinaymanjunath/learning-recommender-gateway:latest
+                    docker push docker.io/vinaymanjunath/learning-recommender-user-service:latest
+                    docker push docker.io/vinaymanjunath/learning-recommender-feedback-service:latest
+                    docker push docker.io/vinaymanjunath/learning-recommender-recommendation-service:latest
+                    '''
+                }
             }
         }
 
