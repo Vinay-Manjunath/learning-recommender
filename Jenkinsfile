@@ -4,6 +4,7 @@ pipeline {
     environment {
         REGISTRY = "docker.io/vinayksm86"
         TAG = "latest"
+        KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
     stages {
@@ -34,7 +35,6 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-
                     sh '''
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
 
@@ -51,6 +51,7 @@ pipeline {
         stage('Deploy via Ansible') {
             steps {
                 sh '''
+                export KUBECONFIG=/var/lib/jenkins/.kube/config
                 ansible-playbook -i ansible/inventory.ini ansible/deploy.yaml
                 '''
             }
