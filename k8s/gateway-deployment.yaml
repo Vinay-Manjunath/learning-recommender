@@ -22,7 +22,7 @@ spec:
       containers:
         - name: api-gateway
 
-          image: learning-recommender-api-gateway:v2
+          image: learning-recommender-api-gateway:latest
 
           imagePullPolicy: IfNotPresent
 
