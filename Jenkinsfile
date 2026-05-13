@@ -37,11 +37,11 @@ pipeline {
                     sh '''
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
         
-                    docker push docker.io/vinaymanjunath/learning-recommender-frontend:latest
-                    docker push docker.io/vinaymanjunath/learning-recommender-gateway:latest
-                    docker push docker.io/vinaymanjunath/learning-recommender-user-service:latest
-                    docker push docker.io/vinaymanjunath/learning-recommender-feedback-service:latest
-                    docker push docker.io/vinaymanjunath/learning-recommender-recommendation-service:latest
+                    docker push $REGISTRY/learning-recommender-frontend:latest
+                    docker push $REGISTRY/learning-recommender-gateway:latest
+                    docker push $REGISTRY/learning-recommender-user-service:latest
+                    docker push $REGISTRY/learning-recommender-feedback-service:latest
+                    docker push $REGISTRY/learning-recommender-recommendation-service:latest
                     '''
                 }
             }
