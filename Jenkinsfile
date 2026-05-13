@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh '''
                 docker build -t $REGISTRY/learning-recommender-frontend:$TAG frontend
-                docker build -t $REGISTRY/learning-recommender-gateway:$TAG backend/api-gateway
+                docker build -t $REGISTRY/learning-recommender-api-gateway:$TAG backend/api-gateway
                 docker build -t $REGISTRY/learning-recommender-user-service:$TAG backend/user-service
                 docker build -t $REGISTRY/learning-recommender-feedback-service:$TAG backend/feedback-service
                 docker build -t $REGISTRY/learning-recommender-recommendation-service:$TAG backend/recommendation-service
