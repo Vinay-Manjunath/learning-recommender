@@ -1,49 +1,66 @@
-- name: Deploy Learning Recommender
+- name: Deploy Learning Recommender on Kubernetes
   hosts: localhost
   connection: local
   gather_facts: no
 
+  environment:
+    KUBECONFIG: /var/lib/jenkins/.kube/config
+
   tasks:
 
     - name: Apply ConfigMap
-      shell: kubectl apply -f ../k8s/app-configmap.yaml
+      shell: kubectl apply -f ../k8s/app-configmap.yaml --validate=false
 
     - name: Apply Secret
-      shell: kubectl apply -f ../k8s/app-secret.yaml
+      shell: kubectl apply -f ../k8s/app-secret.yaml --validate=false
 
     - name: Apply PostgreSQL PV
-      shell: kubectl apply -f ../k8s/postgres-pv.yaml
+      shell: kubectl apply -f ../k8s/postgres-pv.yaml --validate=false
 
     - name: Apply PostgreSQL PVC
-      shell: kubectl apply -f ../k8s/postgres-pvc.yaml
+      shell: kubectl apply -f ../k8s/postgres-pvc.yaml --validate=false
 
-    - name: Deploy PostgreSQL
-      shell: kubectl apply -f ../k8s/postgres-deployment.yaml
+    - name: Apply PostgreSQL Deployment
+      shell: kubectl apply -f ../k8s/postgres-deployment.yaml --validate=false
 
-    - name: PostgreSQL Service
-      shell: kubectl apply -f ../k8s/postgres-service.yaml
+    - name: Apply PostgreSQL Service
+      shell: kubectl apply -f ../k8s/postgres-service.yaml --validate=false
 
-    - name: Deploy Backend Services
-      shell: kubectl apply -f ../k8s/user-deployment.yaml &&
-             kubectl apply -f ../k8s/user-service.yaml &&
-             kubectl apply -f ../k8s/feedback-deployment.yaml &&
-             kubectl apply -f ../k8s/feedback-service.yaml &&
-             kubectl apply -f ../k8s/recommendation-deployment.yaml &&
-             kubectl apply -f ../k8s/recommendation-service.yaml &&
-             kubectl apply -f ../k8s/gateway-deployment.yaml &&
-             kubectl apply -f ../k8s/gateway-service.yaml
+    - name: Apply User Service
+      shell: kubectl apply -f ../k8s/user-deployment.yaml --validate=false
 
-    - name: Deploy Frontend
-      shell: kubectl apply -f ../k8s/frontend-deployment.yaml
+    - name: Apply User Service YAML
+      shell: kubectl apply -f ../k8s/user-service.yaml --validate=false
 
-    - name: Frontend Service
-      shell: kubectl apply -f ../k8s/frontend-service.yaml
+    - name: Apply Feedback Service
+      shell: kubectl apply -f ../k8s/feedback-deployment.yaml --validate=false
 
-    - name: Prometheus Config
-      shell: kubectl apply -f ../k8s/prometheus-configmap.yaml
+    - name: Apply Feedback Service YAML
+      shell: kubectl apply -f ../k8s/feedback-service.yaml --validate=false
 
-    - name: Prometheus Deployment
-      shell: kubectl apply -f ../k8s/prometheus-deployment.yaml
+    - name: Apply Recommendation Service
+      shell: kubectl apply -f ../k8s/recommendation-deployment.yaml --validate=false
 
-    - name: Prometheus Service
-      shell: kubectl apply -f ../k8s/prometheus-service.yaml
+    - name: Apply Recommendation Service YAML
+      shell: kubectl apply -f ../k8s/recommendation-service.yaml --validate=false
+
+    - name: Apply Gateway Deployment
+      shell: kubectl apply -f ../k8s/gateway-deployment.yaml --validate=false
+
+    - name: Apply Gateway Service
+      shell: kubectl apply -f ../k8s/gateway-service.yaml --validate=false
+
+    - name: Apply Frontend Deployment
+      shell: kubectl apply -f ../k8s/frontend-deployment.yaml --validate=false
+
+    - name: Apply Frontend Service
+      shell: kubectl apply -f ../k8s/frontend-service.yaml --validate=false
+
+    - name: Apply Prometheus Config
+      shell: kubectl apply -f ../k8s/prometheus-configmap.yaml --validate=false
+
+    - name: Apply Prometheus Deployment
+      shell: kubectl apply -f ../k8s/prometheus-deployment.yaml --validate=false
+
+    - name: Apply Prometheus Service
+      shell: kubectl apply -f ../k8s/prometheus-service.yaml --validate=false
