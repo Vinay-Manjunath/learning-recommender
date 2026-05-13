@@ -2,6 +2,9 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
 import os
+import time
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from fastapi import Response
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
@@ -111,3 +114,10 @@ async def get_feedback():
         )
 
     return response.json()
+
+@app.get("/metrics")
+def metrics():
+    return Response(
+        generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )

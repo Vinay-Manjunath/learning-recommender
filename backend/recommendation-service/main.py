@@ -4,6 +4,9 @@ from pydantic import BaseModel
 from typing import Optional
 
 from recommender import CourseRecommender
+import time
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from fastapi import Response
 
 
 app = FastAPI(
@@ -54,3 +57,11 @@ def recommend_courses(request: RecommendationRequest):
     )
 
     return results.to_dict(orient="records")
+    
+
+@app.get("/metrics")
+def metrics():
+    return Response(
+        generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )

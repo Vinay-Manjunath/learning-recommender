@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+import time
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from fastapi import Response
 
 app = FastAPI(
     title="Feedback Service",
@@ -76,3 +79,10 @@ def get_course_feedback(course_title: str):
             results.append(feedback)
 
     return results
+
+@app.get("/metrics")
+def metrics():
+    return Response(
+        generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )
