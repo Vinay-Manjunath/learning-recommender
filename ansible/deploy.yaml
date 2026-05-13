@@ -1,24 +1,75 @@
 - name: Deploy Learning Recommender on Kubernetes
   hosts: localhost
+  connection: local
+  gather_facts: no
+
   tasks:
 
-    - name: Apply postgres
-      command: kubectl apply -f k8s/postgres.yaml
+    - name: Apply ConfigMaps
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/app-configmap.yaml
 
-    - name: Apply user service
-      command: kubectl apply -f k8s/user-service.yaml
+    - name: Apply Secrets
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/app-secret.yaml
 
-    - name: Apply feedback service
-      command: kubectl apply -f k8s/feedback-service.yaml
+    - name: Deploy PostgreSQL PV
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/postgres-pv.yaml
 
-    - name: Apply recommendation service
-      command: kubectl apply -f k8s/recommendation-service.yaml
+    - name: Deploy PostgreSQL PVC
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/postgres-pvc.yaml
 
-    - name: Apply gateway
-      command: kubectl apply -f k8s/api-gateway.yaml
+    - name: Deploy PostgreSQL Deployment
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/postgres-deployment.yaml
 
-    - name: Apply frontend
-      command: kubectl apply -f k8s/frontend.yaml
+    - name: Deploy PostgreSQL Service
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/postgres-service.yaml
 
-    - name: Apply prometheus
-      command: kubectl apply -f k8s/prometheus.yaml
+    - name: Deploy Backend Services
+      kubernetes.core.k8s:
+        state: present
+        src: "{{ item }}"
+      loop:
+        - ../k8s/user-deployment.yaml
+        - ../k8s/user-service.yaml
+        - ../k8s/feedback-deployment.yaml
+        - ../k8s/feedback-service.yaml
+        - ../k8s/recommendation-deployment.yaml
+        - ../k8s/recommendation-service.yaml
+        - ../k8s/gateway-deployment.yaml
+        - ../k8s/gateway-service.yaml
+
+    - name: Deploy Frontend
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/frontend-deployment.yaml
+
+    - name: Deploy Frontend Service
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/frontend-service.yaml
+
+    - name: Deploy Monitoring (Prometheus)
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/prometheus-configmap.yaml
+
+    - name: Deploy Prometheus Deployment
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/prometheus-deployment.yaml
+
+    - name: Deploy Prometheus Service
+      kubernetes.core.k8s:
+        state: present
+        src: ../k8s/prometheus-service.yaml
