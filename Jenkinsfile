@@ -39,7 +39,7 @@ pipeline {
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
 
                     docker push $REGISTRY/learning-recommender-frontend:$TAG
-                    docker push $REGISTRY/learning-recommender-gateway:$TAG
+                    docker push $REGISTRY/learning-recommender-api-gateway:$TAG
                     docker push $REGISTRY/learning-recommender-user-service:$TAG
                     docker push $REGISTRY/learning-recommender-feedback-service:$TAG
                     docker push $REGISTRY/learning-recommender-recommendation-service:$TAG
