@@ -1,23 +1,24 @@
----
 - name: Deploy Learning Recommender on Kubernetes
-  hosts: minikube
-
+  hosts: localhost
   tasks:
 
-    - name: Apply Kubernetes manifests
-      shell: |
-        kubectl apply -f k8s/
+    - name: Apply postgres
+      command: kubectl apply -f k8s/postgres.yaml
 
-    - name: Restart Deployments (Rolling Update)
-      shell: |
-        kubectl rollout restart deployment user-deployment
-        kubectl rollout restart deployment feedback-deployment
-        kubectl rollout restart deployment gateway-deployment
-        kubectl rollout restart deployment recommendation-deployment
-        kubectl rollout restart deployment frontend-deployment
+    - name: Apply user service
+      command: kubectl apply -f k8s/user-service.yaml
 
-    - name: Wait for rollout
-      shell: |
-        kubectl rollout status deployment user-deployment
-        kubectl rollout status deployment gateway-deployment
-        kubectl rollout status deployment recommendation-deployment
+    - name: Apply feedback service
+      command: kubectl apply -f k8s/feedback-service.yaml
+
+    - name: Apply recommendation service
+      command: kubectl apply -f k8s/recommendation-service.yaml
+
+    - name: Apply gateway
+      command: kubectl apply -f k8s/api-gateway.yaml
+
+    - name: Apply frontend
+      command: kubectl apply -f k8s/frontend.yaml
+
+    - name: Apply prometheus
+      command: kubectl apply -f k8s/prometheus.yaml
