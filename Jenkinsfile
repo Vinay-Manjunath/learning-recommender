@@ -50,7 +50,7 @@ pipeline {
         stage('Deploy via Ansible') {
             steps {
                 sh '''
-                ansible-playbook -i ansible/inventory ansible/deploy.yaml
+                ansible-playbook -i ansible/inventory.ini ansible/deploy.yaml
                 '''
             }
         }
