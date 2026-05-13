@@ -1,0 +1,23 @@
+---
+- name: Deploy Learning Recommender on Kubernetes
+  hosts: minikube
+
+  tasks:
+
+    - name: Apply Kubernetes manifests
+      shell: |
+        kubectl apply -f k8s/
+
+    - name: Restart Deployments (Rolling Update)
+      shell: |
+        kubectl rollout restart deployment user-deployment
+        kubectl rollout restart deployment feedback-deployment
+        kubectl rollout restart deployment gateway-deployment
+        kubectl rollout restart deployment recommendation-deployment
+        kubectl rollout restart deployment frontend-deployment
+
+    - name: Wait for rollout
+      shell: |
+        kubectl rollout status deployment user-deployment
+        kubectl rollout status deployment gateway-deployment
+        kubectl rollout status deployment recommendation-deployment
