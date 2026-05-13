@@ -1,34 +1,40 @@
 pipeline {
     agent any
 
+    environment {
+        REGISTRY = "docker.io/vinaymanjunath"
+        TAG = "latest"
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Vinay-Manjunath/learning-recommender.git'
+                git branch: 'main',
+                url: 'https://github.com/Vinay-Manjunath/learning-recommender.git'
             }
         }
 
         stage('Build Images') {
             steps {
                 sh '''
-                docker build -t learning-recommender-frontend:latest frontend
-                docker build -t learning-recommender-gateway:latest backend/api-gateway
-                docker build -t learning-recommender-user-service:latest backend/user-service
-                docker build -t learning-recommender-feedback-service:latest backend/feedback-service
-                docker build -t learning-recommender-recommendation-service:latest backend/recommendation-service
+                docker build -t $REGISTRY/learning-recommender-frontend:$TAG frontend
+                docker build -t $REGISTRY/learning-recommender-gateway:$TAG backend/api-gateway
+                docker build -t $REGISTRY/learning-recommender-user-service:$TAG backend/user-service
+                docker build -t $REGISTRY/learning-recommender-feedback-service:$TAG backend/feedback-service
+                docker build -t $REGISTRY/learning-recommender-recommendation-service:$TAG backend/recommendation-service
                 '''
             }
         }
 
-        stage('Load into Minikube') {
+        stage('Push Images') {
             steps {
                 sh '''
-                minikube image load learning-recommender-frontend:latest
-                minikube image load learning-recommender-gateway:latest
-                minikube image load learning-recommender-user-service:latest
-                minikube image load learning-recommender-feedback-service:latest
-                minikube image load learning-recommender-recommendation-service:latest
+                docker push $REGISTRY/learning-recommender-frontend:$TAG
+                docker push $REGISTRY/learning-recommender-gateway:$TAG
+                docker push $REGISTRY/learning-recommender-user-service:$TAG
+                docker push $REGISTRY/learning-recommender-feedback-service:$TAG
+                docker push $REGISTRY/learning-recommender-recommendation-service:$TAG
                 '''
             }
         }
