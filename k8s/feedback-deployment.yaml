@@ -22,7 +22,7 @@ spec:
       containers:
         - name: feedback-service
 
-          image: learning-recommender-feedback-service:latest
+          image: docker.io/vinayksm86/learning-recommender-feedback-service:latest
 
           imagePullPolicy: IfNotPresent
 
