@@ -22,9 +22,9 @@ spec:
       containers:
         - name: api-gateway
 
-          image: learning-recommender-api-gateway:latest
+          image: docker.io/vinayksm86/learning-recommender-api-gateway:latest
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8000
