@@ -24,7 +24,7 @@ spec:
 
           image: docker.io/vinayksm86/learning-recommender-feedback-service:latest
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8003
