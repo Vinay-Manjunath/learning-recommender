@@ -65,3 +65,8 @@
     - name: Apply Prometheus Service
       shell: kubectl apply -f ../k8s/prometheus-service.yaml --validate=false
 
+    - name: Apply ELK
+      shell: |
+        kubectl apply -f elasticsearch.yaml &&
+        kubectl apply -f kibana.yaml &&
+        kubectl apply -f fluent-bit.yaml
