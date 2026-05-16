@@ -30,7 +30,7 @@ function App() {
     try {
 
       const response = await axios.post(
-        "http://localhost:30880/recommend",
+        "http://recommendation-service:8001/recommend",
         {
           query,
           difficulty,
