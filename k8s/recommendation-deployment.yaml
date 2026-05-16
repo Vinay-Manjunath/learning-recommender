@@ -22,9 +22,9 @@ spec:
       containers:
         - name: recommendation-service
 
-          image: learning-recommender-recommendation-service:latest
+          image: docker.io/vinayksm86/learning-recommender-recommendation-service:latest
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8001
