@@ -67,6 +67,6 @@
 
     - name: Apply ELK
       shell: |
-        kubectl apply -f elasticsearch.yaml &&
-        kubectl apply -f kibana.yaml &&
-        kubectl apply -f fluent-bit.yaml
+        kubectl apply -f ../k8s/elasticsearch.yaml &&
+        kubectl apply -f ../k8s/kibana.yaml &&
+        kubectl apply -f ../k8s/fluent-bit.yaml
