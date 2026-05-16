@@ -22,9 +22,9 @@ spec:
       containers:
         - name: user-service
 
-          image: learning-recommender-user-service:latest
+          image: docker.io/vinayksm86/learning-recommender-user-service:latest
 
-          imagePullPolicy: Never
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8002
