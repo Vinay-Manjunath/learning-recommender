@@ -22,9 +22,9 @@ spec:
       containers:
         - name: frontend
 
-          image: learning-recommender-frontend:latest
+          image: docker.io/vinayksm86/learning-recommender-frontend:latest
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 5173
