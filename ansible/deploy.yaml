@@ -26,23 +26,26 @@
     - name: Apply PostgreSQL Service
       shell: kubectl apply -f ../k8s/postgres-service.yaml --validate=false
 
-    - name: Apply User Service
+    - name: Apply User Deployment
       shell: kubectl apply -f ../k8s/user-deployment.yaml --validate=false
 
-    - name: Apply User Service YAML
+    - name: Apply User Service
       shell: kubectl apply -f ../k8s/user-service.yaml --validate=false
 
-    - name: Apply Feedback Service
+    - name: Apply Feedback Deployment
       shell: kubectl apply -f ../k8s/feedback-deployment.yaml --validate=false
 
-    - name: Apply Feedback Service YAML
+    - name: Apply Feedback Service
       shell: kubectl apply -f ../k8s/feedback-service.yaml --validate=false
 
-    - name: Apply Recommendation Service
+    - name: Apply Recommendation Deployment
       shell: kubectl apply -f ../k8s/recommendation-deployment.yaml --validate=false
 
-    - name: Apply Recommendation Service YAML
+    - name: Apply Recommendation Service
       shell: kubectl apply -f ../k8s/recommendation-service.yaml --validate=false
+
+    - name: Apply Recommendation HPA
+      shell: kubectl apply -f ../k8s/recommendation-hpa.yaml --validate=false
 
     - name: Apply Gateway Deployment
       shell: kubectl apply -f ../k8s/gateway-deployment.yaml --validate=false
@@ -67,6 +70,6 @@
 
     - name: Apply ELK
       shell: |
-        kubectl apply -f ../k8s/elasticsearch.yaml &&
-        kubectl apply -f ../k8s/kibana.yaml &&
+        kubectl apply -f ../k8s/elasticsearch.yaml
+        kubectl apply -f ../k8s/kibana.yaml
         kubectl apply -f ../k8s/fluent-bit.yaml
