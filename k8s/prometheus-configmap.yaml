@@ -15,19 +15,19 @@ data:
       - job_name: "api-gateway"
 
         static_configs:
-          - targets: ["api-gateway:8000"]
+          - targets: ["localhost:8000"]
 
       - job_name: "recommendation-service"
 
         static_configs:
-          - targets: ["recommendation-service:8001"]
+          - targets: ["localhost:8001"]
 
       - job_name: "user-service"
 
         static_configs:
-          - targets: ["user-service:8002"]
+          - targets: ["localhost:8002"]
 
       - job_name: "feedback-service"
 
         static_configs:
-          - targets: ["feedback-service:8003"]
+          - targets: ["localhost:8003"]
