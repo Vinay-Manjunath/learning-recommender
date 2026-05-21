@@ -8,70 +8,95 @@
 
   tasks:
 
+    # =========================
+    # CORE CONFIG
+    # =========================
     - name: Apply ConfigMap
-      shell: kubectl apply -f ../k8s/app-configmap.yaml --validate=false
+      shell: kubectl apply -f ../k8s/app-configmap.yaml
 
     - name: Apply Secret
-      shell: kubectl apply -f ../k8s/app-secret.yaml --validate=false
+      shell: kubectl apply -f ../k8s/app-secret.yaml
 
+    # =========================
+    # POSTGRESQL
+    # =========================
     - name: Apply PostgreSQL PV
-      shell: kubectl apply -f ../k8s/postgres-pv.yaml --validate=false
+      shell: kubectl apply -f ../k8s/postgres-pv.yaml
 
     - name: Apply PostgreSQL PVC
-      shell: kubectl apply -f ../k8s/postgres-pvc.yaml --validate=false
+      shell: kubectl apply -f ../k8s/postgres-pvc.yaml
 
     - name: Apply PostgreSQL Deployment
-      shell: kubectl apply -f ../k8s/postgres-deployment.yaml --validate=false
+      shell: kubectl apply -f ../k8s/postgres-deployment.yaml
 
     - name: Apply PostgreSQL Service
-      shell: kubectl apply -f ../k8s/postgres-service.yaml --validate=false
+      shell: kubectl apply -f ../k8s/postgres-service.yaml
 
+    # =========================
+    # MICROSERVICES
+    # =========================
     - name: Apply User Deployment
-      shell: kubectl apply -f ../k8s/user-deployment.yaml --validate=false
+      shell: kubectl apply -f ../k8s/user-deployment.yaml
 
     - name: Apply User Service
-      shell: kubectl apply -f ../k8s/user-service.yaml --validate=false
+      shell: kubectl apply -f ../k8s/user-service.yaml
 
     - name: Apply Feedback Deployment
-      shell: kubectl apply -f ../k8s/feedback-deployment.yaml --validate=false
+      shell: kubectl apply -f ../k8s/feedback-deployment.yaml
 
     - name: Apply Feedback Service
-      shell: kubectl apply -f ../k8s/feedback-service.yaml --validate=false
+      shell: kubectl apply -f ../k8s/feedback-service.yaml
 
     - name: Apply Recommendation Deployment
-      shell: kubectl apply -f ../k8s/recommendation-deployment.yaml --validate=false
+      shell: kubectl apply -f ../k8s/recommendation-deployment.yaml
 
     - name: Apply Recommendation Service
-      shell: kubectl apply -f ../k8s/recommendation-service.yaml --validate=false
+      shell: kubectl apply -f ../k8s/recommendation-service.yaml
 
     - name: Apply Recommendation HPA
-      shell: kubectl apply -f ../k8s/recommendation-hpa.yaml --validate=false
+      shell: kubectl apply -f ../k8s/recommendation-hpa.yaml
 
+    # =========================
+    # GATEWAY + FRONTEND
+    # =========================
     - name: Apply Gateway Deployment
-      shell: kubectl apply -f ../k8s/gateway-deployment.yaml --validate=false
+      shell: kubectl apply -f ../k8s/gateway-deployment.yaml
 
     - name: Apply Gateway Service
-      shell: kubectl apply -f ../k8s/gateway-service.yaml --validate=false
+      shell: kubectl apply -f ../k8s/gateway-service.yaml
 
     - name: Apply Frontend Deployment
-      shell: kubectl apply -f ../k8s/frontend-deployment.yaml --validate=false
+      shell: kubectl apply -f ../k8s/frontend-deployment.yaml
 
     - name: Apply Frontend Service
-      shell: kubectl apply -f ../k8s/frontend-service.yaml --validate=false
+      shell: kubectl apply -f ../k8s/frontend-service.yaml
 
+    # =========================
+    # PROMETHEUS
+    # =========================
     - name: Apply Prometheus Config
-      shell: kubectl apply -f ../k8s/prometheus-configmap.yaml --validate=false
+      shell: kubectl apply -f ../k8s/prometheus-configmap.yaml
 
     - name: Apply Prometheus Deployment
-      shell: kubectl apply -f ../k8s/prometheus-deployment.yaml --validate=false
+      shell: kubectl apply -f ../k8s/prometheus-deployment.yaml
 
     - name: Apply Prometheus Service
-      shell: kubectl apply -f ../k8s/prometheus-service.yaml --validate=false
+      shell: kubectl apply -f ../k8s/prometheus-service.yaml
 
-    - name: Apply ELK
-      shell: |
-        kubectl apply -f ../k8s/namespace.yaml
-        kubectl apply -f ../k8s/elasticsearch.yaml
-        kubectl apply -f ../k8s/kibana.yaml
-        kubectl apply -f ../k8s/filebeat-config.yaml
-        kubectl apply -f ../k8s/filebeat-daemonset.yaml
+    # =========================
+    # ELK STACK (FIXED ORDER + CLARITY)
+    # =========================
+    - name: Apply ELK Namespace
+      shell: kubectl apply -f ../k8s/namespace.yaml
+
+    - name: Apply Elasticsearch
+      shell: kubectl apply -f ../k8s/elasticsearch.yaml
+
+    - name: Apply Kibana
+      shell: kubectl apply -f ../k8s/kibana.yaml
+
+    - name: Apply Filebeat Config
+      shell: kubectl apply -f ../k8s/filebeat-config.yaml
+
+    - name: Apply Filebeat DaemonSet
+      shell: kubectl apply -f ../k8s/filebeat-daemonset.yaml
