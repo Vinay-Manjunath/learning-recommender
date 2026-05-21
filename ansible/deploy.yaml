@@ -68,10 +68,16 @@
     - name: Apply Prometheus Service
       shell: kubectl apply -f ../k8s/prometheus-service.yaml --validate=false
 
-    - name: Apply ELK
-      shell: |
-        kubectl apply -f ../k8s/namespace.yaml
-        kubectl apply -f ../k8s/elasticsearch.yaml
-        kubectl apply -f ../k8s/kibana.yaml
-        kubectl apply -f ../k8s/filebeat-config.yaml
-        kubectl apply -f ../k8s/filebeat-daemonset.yaml
+    # --- ELK Stack Deployment ---
+    
+    - name: Apply ELK Namespace
+      shell: kubectl apply -f ../k8s/elk-namespace.yaml --validate=false
+
+    - name: Apply Elasticsearch
+      shell: kubectl apply -f ../k8s/elasticsearch.yaml --validate=false
+
+    - name: Apply Logstash
+      shell: kubectl apply -f ../k8s/logstash.yaml --validate=false
+
+    - name: Apply Kibana
+      shell: kubectl apply -f ../k8s/kibana.yaml --validate=false
