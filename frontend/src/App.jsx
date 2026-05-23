@@ -63,7 +63,7 @@ function App() {
         <div className="text-center mb-10">
 
           <h1 className="text-6xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Personalized Learning Recommender
+            Learning Recommender
           </h1>
 
           <p className="text-gray-600 text-lg">
